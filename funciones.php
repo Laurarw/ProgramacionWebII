@@ -1,24 +1,27 @@
 <?php
-error_reporting(E_ALL);
-ini_set('display_errors', '1');
-function validarCampo($variable){
+//error_reporting(E_ALL);
+//ini_set('display_errors', '1');
+//session_start();
+
+function campoVacio($variable){
     if(trim($variable) == ''){
-       return false;
-    }else{
        return true;
+    }else{
+       return false;
     }
  }
 
-function validarNombreApellido($name){
+function validarNombreApellido($name,&$errores,$nombrecampo){
 	//SI longitud pero NO solo caracteres A-z
 	if(!preg_match("/^[a-zA-Z]+$/", $name)){
-            return 1;}
+                        $errores[$nombrecampo]="solo caracteres";
+           }
 	//longitud
-	else if(strlen($name) < 3){
-            return 2;}
+	else if(strlen($name) <= 1){
+              $errores[$nombrecampo]="debe tener mas caracteres";}
 	// SI longitud, SI caracteres A-z
 	
-    return 0;
+  
 }
 
 
@@ -30,12 +33,13 @@ function validarEntero($valor){
     }
  }
 
- function rangoDocumento($documento){
+ function rangoDocumento($documento,&$errores){
      if($documento>1000000 and $documento<99999999){
-         return true;
+       $errores['documento']='';
+     }else{
+    
+      $errores['documento']='su documento no esta en rango';
      }
-     return false;
-     
  }
  
  function cargarSelect($array,$valor){
@@ -48,10 +52,29 @@ function validarEntero($valor){
 }
 
 function fechaValida($fecha1,$fecha2){
-    if($fecha1>$fecha2){
+    if($fecha1>=$fecha2){
         return true;
         
     }
     return false;
+    
+}
+function valoresDeCampos(&$variableSession,$variablePost,&$errores,$nombrecampo){
+    
+    if(campoVacio($variablePost)){
+      
+        $errores[$nombrecampo]="El campo no debe estar vacio. Completelo porfavor";
+        $variableSession='';
+      
+    }else{
+         
+       $variableSession=$variablePost;
+       if($nombrecampo=='nombre' ||$nombrecampo== 'apellido'){
+                 validarNombreApellido($variableSession, $errores, $nombrecampo);
+       }
+       if($nombrecampo=='documento'){
+           rangoDocumento($variableSession,$errores);
+       }
+    }
     
 }
