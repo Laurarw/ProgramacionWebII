@@ -1,11 +1,14 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', '1');
 @session_start();
 require_once 'funciones.php';
 require_once 'conexionBD.php';
-date_default_timezone_set('UTC');
+//date_default_timezone_set('UTC-8');
 
 $ejemplares = array ('A','B','C','D','E');
 $errores=  [];
+
 if(isset($_POST["enviar"])){
    $_SESSION['fechaNacimiento']=$_POST['fechaNacimiento'];
     valoresDeCampos($_SESSION['nombre'], $_POST['nombres'], $errores,'nombre');
@@ -33,44 +36,50 @@ if(isset($_POST["enviar"])){
     if(empty($errores)){
            
               header('Location: datosCorrectos.php');
+              exit();
           }else{
                 
               header('Location: index.php');
+              exit();
           }
 }
 
 if(isset($_POST["logear"])){    
             
-             $errMsg = '';
+          $_SESSION['errMsg'] = '';
          //username and password sent from Form
          $usuario = trim($_POST['usuario']);
          $pass = trim($_POST['pass']);
 
          if($usuario == '')
-             {$errMsg .= 'Debes ingresar tu nombre de usuario<br>';}
+             {$_SESSION['errMsg']  .= 'Debes ingresar tu nombre de usuario<br>';}
 
          if($pass == '')
-             {$errMsg .= 'Debes ingresar tu contraseña<br>';}
+             {$_SESSION['errMsg']  .= 'Debes ingresar tu contraseña<br>';}
 
 
-         if($errMsg == ''){
-                    $records = $con->prepare('SELECT * FROM usuarios WHERE nombre= :usuario AND pass= :pass")');
+         if($_SESSION['errMsg']  == ''){
+                    $records = $con->prepare('SELECT  nombre FROM usuarios WHERE nombre= :usuario AND pass= :pass');
                     $records->bindParam(':usuario', $usuario);
-                    $records->bindParam(':pass', $pass);
-                
+                    $records->bindParam(':pass', $pass);                
                     $records->execute();
-                    $results = $records->fetch(PDO::FETCH_NUM);
+                    //$results = $records->fetch(PDO::FETCH_ASSOC);
                     
-                    if(count($results) == 1 ){
-                        
+                   // if(count($results) >0 ){
+                        if($records = $records->fetch(PDO::FETCH_ASSOC)){
                             $_SESSION['usuario'] = $usuario;
-                          //  $_SESSION['usuario']='jj';
+                        
                            // $_SESSION['mensajelogin']= "<label>Usuario conectado: ".$_SESSION['usuario']."</label>";
                             header('Location: index.php');
-                            exit;
+                            exit();
                     }else{
-                            $errMsg .= 'Usuario y contraseña no se econtraron<br>';
+                            $_SESSION['errMsg']  .= 'Usuario y contraseña no se econtraron<br>';
+                            header('Location: login.php');
+                            exit();
                     }
+         }else{
+             header('Location: login.php');
+             exit();
          }
  }
 
