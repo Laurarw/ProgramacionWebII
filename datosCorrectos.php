@@ -2,9 +2,7 @@
 error_reporting(E_ALL);
 ini_set('display_errors', '1');
 session_start();
-require_once 'procesamientoDatos.php';
-
-?>
+require_once 'procesamientoDatos.php';?>
 <html>
     <head>
         <title> Formulario Valido </title>
@@ -14,11 +12,6 @@ require_once 'procesamientoDatos.php';
     <strong> Sus datos han sido enviados correctamente </strong>
     Nombre: <?php  echo $_SESSION['nombre'];?>
     Apellido <?php  echo $_SESSION['apellido'];
-    //aca van los datos
-    
-    ?>
-    
-    
-    </body>
+    //aca van los datos?></body>
 </html>
 

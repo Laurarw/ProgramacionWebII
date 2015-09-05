@@ -1,18 +1,13 @@
 <!DOCTYPE html>
 <?php
- 
 error_reporting(E_ALL);
 ini_set('display_errors', '1');
 @session_start();
- 
+  //require 'login.php';
     require_once 'procesamientoDatos.php';
     require_once 'funciones.php';
-    $errores=$_SESSION["errores"];
-
-    session_destroy();
-     
-?>
-<html>
+    @$errores=$_SESSION["errores"];
+    session_destroy();?><html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <!--        <link rel="stylesheet" href="estilo.css" type="text/css">-->
@@ -26,18 +21,19 @@ ini_set('display_errors', '1');
     <body>
         
         <H3> Ingresar los datos Del Documento Nacional de Identidad (DNI)</H3>
+       <?php  echo 'Usuario conectado: '.$_SESSION['usuario'];?>
         <div class="container">  
             <form method="post" action= "procesamientoDatos.php">
                 <div>
                     <label for="nombres">Nombres:</label>
-                    <input type="text" name="nombres" placeholder="Ingresar nombres" value="<?php echo @$_SESSION['nombre']  ?>">
-                   <?php echo    "<span style='color:#F00066'>". @$errores['nombre']."</span>";    ?>
+                    <input type="text" name="nombres" placeholder="Ingresar nombres" value="<?php echo @$_SESSION['nombre']?>">
+                   <?php echo    "<span style='color:#F00066'>". @$errores['nombre']."</span>";?>
                     
                 </div>
              <div>
                     <br><label for="apellidos">Apellidos:</label>
                     <input type="text" name="apellidos" placeholder="Ingresar apellidos" value="<?php echo @$_SESSION['apellido'] ?>">
-                    <?php         echo "<span style='color:#F00066'>". @$errores['apellido']."</span>";  ?>
+                    <?php echo "<span style='color:#F00066'>". @$errores['apellido']."</span>";?>
                 </div>
                 
               <div class="checkbox">
@@ -54,7 +50,7 @@ ini_set('display_errors', '1');
                                    echo "<input type='radio' name='sex' value='m'>Masculino";
                                    echo" <input type='radio' name='sex' value='f'>Femenino";
                          }  
-                         echo "<span style='color:#F00066'>". @$errores['sexo']."</span>"; ?>
+                         echo "<span style='color:#F00066'>". @$errores['sexo']."</span>";?>
 
                     
                 </div>
@@ -78,32 +74,26 @@ ini_set('display_errors', '1');
                <div>
                     <br><label for="ejemplar">Ejemplar:</label>
                     <select name="ejemplar" onchange="sumit()">	
-                    <?php 
-                            echo "<option value='' >Seleccionar Ejemplar</option>";
-                           cargarSelect($ejemplares,@$_SESSION['ejemplar']) ;
-                      
-                       
-                      
-                      ?>
-                   </select>
-                    <?php         echo "<span style='color:#F00066'>". @$errores['ejemplar']."</span>";  ?>
+                    <?php echo "<option value='' >Seleccionar Ejemplar</option>";
+                           cargarSelect($ejemplares,@$_SESSION['ejemplar']) ;?>
+                   </select> <?php echo "<span style='color:#F00066'>". @$errores['ejemplar']."</span>";?>
                 </div>
 
                 <div>			
                     <br><label for="fechaNacimiento">Fecha de Nacimiento</label>
                     <input type= "date" name="fechaNacimiento" value="<?php echo @$_SESSION['fechaNacimiento'] ?>" >
-                    <?php         echo "<span style='color:#F00066'>". @$errores[fechaNacimiento]."</span>";  ?>
+                    <?php echo "<span style='color:#F00066'>". @$errores[fechaNacimiento]."</span>";?>
                 </div>	
                 
                 <div>
                     <br><label for="documento">Numero de Documento:</label>
                     <input type="number" name="documento" placeholder="Ingresar documento" value="<?php echo @$_SESSION['documento'] ?>">
-                     <?php         echo "<span style='color:#F00066'>". @$errores['documento']."</span>";  ?>
+                     <?php echo "<span style='color:#F00066'>". @$errores['documento']."</span>";?>
                 </div>	
                 <div>
                     <br><label for="domicilio">Domicilio:</label>
                     <input type="text" name="domicilio" placeholder="Ingresar domicilio" value="<?php echo @$_SESSION['domicilio'] ?>">
-                      <?php echo "<span style='color:#F00066'>". @$errores['domicilio']."</span>";  ?>
+                      <?php echo "<span style='color:#F00066'>". @$errores['domicilio']."</span>";?>
                 </div>
 <!--                <div>
                     <br><H4> Adjunte su foto</H4>

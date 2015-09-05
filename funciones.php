@@ -2,7 +2,6 @@
 //error_reporting(E_ALL);
 //ini_set('display_errors', '1');
 //session_start();
-
 function campoVacio($variable){
     if(trim($variable) == ''){
        return true;
@@ -53,10 +52,10 @@ function validarEntero($valor){
 
 function fechaValida($fecha1,$fecha2){
     if($fecha1>=$fecha2){
-        return true;
+        return false;
         
     }
-    return false;
+    return TRUE;
     
 }
 function valoresDeCampos(&$variableSession,$variablePost,&$errores,$nombrecampo){
