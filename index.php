@@ -7,21 +7,29 @@ ini_set('display_errors', '1');
     require_once 'procesamientoDatos.php';
     require_once 'funciones.php';
     @$errores=$_SESSION["errores"];
-    session_destroy();?><html>
+    
+    session_destroy();?>
+<html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <!--        <link rel="stylesheet" href="estilo.css" type="text/css">-->
+<!--               <link rel="stylesheet" href="estilo.css" type="text/css">-->
+ 
         <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
         <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
         
 
         <title>Formulario</title>
+        
+        
+       
+
     </head>
     <body>
         
         <H3> Ingresar los datos Del Documento Nacional de Identidad (DNI)</H3>
-       <?php  echo 'Usuario conectado: '.$_SESSION['usuario'];?>
+      <?php echo 'Usuario conectado: '.@$_SESSION['usuario'];?>
+        
         <div class="container">  
             <form method="post" action= "procesamientoDatos.php">
                 <div>
@@ -36,7 +44,7 @@ ini_set('display_errors', '1');
                     <?php echo "<span style='color:#F00066'>". @$errores['apellido']."</span>";?>
                 </div>
                 
-              <div class="checkbox">
+                <div class="checkbox">
                     <br> <label for="sex">Sexo:</label>  
                         <?php  $sex_post=@$_SESSION['sexo'];
                         if ($sex_post=='m'){
@@ -53,25 +61,39 @@ ini_set('display_errors', '1');
                          echo "<span style='color:#F00066'>". @$errores['sexo']."</span>";?>
 
                     
-                </div>
-           <!--     <div>
-                    <br> <label for="nacionalidad">Nacionalidad:</label><br>
-                    <select name="nacionalidad" onchange="sumit()">				
-                        <option value="pais">Seleccionar</option>
-                    </select>   
-                </div>
+                  </div>
                 <div>
-                    <br> <label for="provinciaResidencia">Provincia en la que reside:</label><br>
-                    <select name="provinciaResidencia" onchange="sumit()">				
-                        <option value="provincia">Seleccionar</option>
-                    </select>
-                    <br> <label for="ciudadResidencia">Ciudad en la que reside:</label><br>
-                    <select name="ciudadResidencia" onchange="sumit()">				
-                        <option value="ciudad">Seleccionar</option>
-                    </select>
+                    <br> <label for="pais" >Nacionalidad:</label><br>
+                    <select id="pais" name="pais">				
+                       <option value='0'>Seleccionar</option>;
+                         <?php 
+                      
+                         selectPaises($con,@$_SESSION['pais']);                    
+                        ?>
+                       
+                    </select>    <?php echo "<span style='color:#F00066'>". @$errores['pais']."</span>";?>
+                   
                 </div>
--->               
-               <div>
+        <!--      <div>
+                    <br> <label for="provincia">Provincia en la que reside:</label><br>
+                    <select name="provincia" onchange="sumit()">				
+                        <option value="0">Seleccionar</option>
+                      
+                        
+                        
+                    </select>
+                    
+                    <br> <label for="localidad">Ciudad en la que reside:</label><br>
+                    <select name="localidad" onchange="sumit()">				
+                        <option value="0">Seleccionar</option>
+                    </select>
+                </div> 
+                
+                <center>
+                           <div id="divAplicacion"></div>
+                  </center>-->
+             
+              <div>
                     <br><label for="ejemplar">Ejemplar:</label>
                     <select name="ejemplar" onchange="sumit()">	
                     <?php echo "<option value='' >Seleccionar Ejemplar</option>";
@@ -79,7 +101,7 @@ ini_set('display_errors', '1');
                    </select> <?php echo "<span style='color:#F00066'>". @$errores['ejemplar']."</span>";?>
                 </div>
 
-                <div>			
+               <div>			
                     <br><label for="fechaNacimiento">Fecha de Nacimiento</label>
                     <input type= "date" name="fechaNacimiento" value="<?php echo @$_SESSION['fechaNacimiento'] ?>" >
                     <?php echo "<span style='color:#F00066'>". @$errores[fechaNacimiento]."</span>";?>
@@ -90,12 +112,12 @@ ini_set('display_errors', '1');
                     <input type="number" name="documento" placeholder="Ingresar documento" value="<?php echo @$_SESSION['documento'] ?>">
                      <?php echo "<span style='color:#F00066'>". @$errores['documento']."</span>";?>
                 </div>	
-                <div>
+                 <div>
                     <br><label for="domicilio">Domicilio:</label>
                     <input type="text" name="domicilio" placeholder="Ingresar domicilio" value="<?php echo @$_SESSION['domicilio'] ?>">
                       <?php echo "<span style='color:#F00066'>". @$errores['domicilio']."</span>";?>
                 </div>
-<!--                <div>
+            <!--   <div>
                     <br><H4> Adjunte su foto</H4>
                     <input type="file" name="foto" multiple ><br>
                 </div>-->
