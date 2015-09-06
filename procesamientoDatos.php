@@ -23,7 +23,8 @@ if(isset($_POST["enviar"])){
          $fechaEmision=date("Y-m-d");
                 $fechaVencimiento=strtotime ( '+15 year' , strtotime( $fechaEmision ) ) ;
                 $fechaVencimiento = date ( 'Y-m-j' , $fechaVencimiento );
-                
+               $_SESSION['fechaEmision']= $fechaEmision;
+                $_SESSION['fechaVencimiento']= $fechaVencimiento;
                
        if($_SESSION['fechaNacimiento']==NULL){
                      $errores['fechaNacimiento']='Debe ingresar su fecha de nacimiento';

@@ -10,8 +10,28 @@ session_start();
     </head>
     <body>
     <strong> Sus datos han sido enviados correctamente </strong>
-    Nombre: <?php  echo $_SESSION['nombre'];?>
-    Apellido <?php  echo $_SESSION['apellido'];
-    //aca van los datos?></body>
+    
+   <br>
+   <br>
+   <br>
+               
+     <?php  echo "<br>Nombre:". $_SESSION['nombre'].
+             "<br>Apellido".$_SESSION['apellido'].
+             "<br>Sexo:".$_SESSION['sexo'].
+             "<br>Nacionalidad: ".$_SESSION['pais'].
+             "<br>Ejemplar: ".$_SESSION['ejemplar'].
+             "<br>Fecha de Nacimiento: ".$_SESSION['fechaNacimiento'].
+             "<br>Fecha de Emicion: ".$_SESSION['fechaEmision'].
+             "<br>Fecha de Vencimiento: ". $_SESSION['fechaVencimiento'].
+             "<br>Documento: ".$_SESSION['documento'].
+             "<br>Domicilio: ".$_SESSION['domicilio']
+             
+             ;
+    
+    //aca van los datos
+    
+    ?>
+    
+    </body>
 </html>
 
