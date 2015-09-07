@@ -8,6 +8,7 @@ require_once 'conexionBD.php';
 
 $ejemplares = array ('A','B','C','D','E');
 
+
  
 if(isset($_POST["enviar"])){
    $errores=  [];
@@ -35,8 +36,11 @@ if(isset($_POST["enviar"])){
     $_SESSION["errores"]=$errores; 
       
     if(empty($errores)){
-        guardarDatos($con,$_SESSION['nombre'], $_SESSION['apellido'], $_SESSION['sexo'], $_SESSION['pais'], $_SESSION['ejemplar'],  $_SESSION['fechaNacimiento'], $fechaEmision, $_SESSION['documento'],  $_SESSION['domicilio']);
-      
+        guardarDatos($con,$_SESSION['nombre'], $_SESSION['apellido'], $_SESSION['sexo'], $_SESSION['pais'], $_SESSION['ejemplar'],  $_SESSION['fechaNacimiento'], $fechaEmision, $fechaVencimiento,$_SESSION['documento'],  $_SESSION['domicilio']);
+      $resultado=  ejecutarQuery($con,"SELECT * FROM personas" );
+
+$total_resultados=$resultado->rowCount();
+$_SESSION['totalPersonas']=$total_resultados;
                  header('Location: datosCorrectos.php');
                  exit();
             

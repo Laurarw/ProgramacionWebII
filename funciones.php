@@ -12,7 +12,7 @@ function campoVacio($variable){
 
 function validarNombreApellido($name,&$errores,$nombrecampo){
 	//SI longitud pero NO solo caracteres A-z
-	if(!preg_match("/^[a-zA-Z]+$/", $name)){
+	if(!preg_match("/^[a-z áéíóúñüàè]+$/i", $name)){
                         $errores[$nombrecampo]="solo caracteres";
                                                 return;
            }
@@ -133,15 +133,15 @@ function ejecutarQuery($db, $sql) {
       
   }
   
-  function guardarDatos ($con,$nombre,$apellidos,$sexo,$pais_nacimiento,$ejemplar,$fecha_nacimiento,$fecha_emicion,$num_documento,$domicilio){
+  function guardarDatos ($con,$nombre,$apellidos,$sexo,$pais_nacimiento,$ejemplar,$fecha_nacimiento,$fecha_emicion,$fecha_vencimiento,$num_documento,$domicilio){
       require_once 'conexionBD.php';
       try {
         # Creamos la cadena sql
         $sql="INSERT INTO `personas`
             (
-                `nombres`,`apellidos`,`sexo`,`pais_nacimientoID`,`provincia_nacimiento`,`ejemplar`,`fecha_nacimiento`,`fecha_emicion`,`num_documento`,`domicilio`,`provincias_residenciaID`,`ciudad_residencia`,`cuil`,`imagen`
+                `nombres`,`apellidos`,`sexo`,`pais_nacimientoID`,`provincia_nacimiento`,`ejemplar`,`fecha_nacimiento`,`fecha_emicion`,`fecha_vencimiento`,`num_documento`,`domicilio`,`provincias_residenciaID`,`ciudad_residencia`,`cuil`,`imagen`
             )VALUES(
-               :nombres, :apellidos, :sexo, :pais_nacimientoID, :provincia_nacimiento, :ejemplar, :fecha_nacimiento, :fecha_emicion, :num_documento, :domicilio, :provincias_residenciaID, :ciudad_residencia, :cuil, :imagen)";
+               :nombres, :apellidos, :sexo, :pais_nacimientoID, :provincia_nacimiento, :ejemplar, :fecha_nacimiento, :fecha_emicion,:fecha_vencimiento, :num_documento, :domicilio, :provincias_residenciaID, :ciudad_residencia, :cuil, :imagen)";
         
         $sth=$con->prepare($sql);
         # Creamos el array con los valores a ser reemplazados en la cadena sql
@@ -156,6 +156,7 @@ function ejecutarQuery($db, $sql) {
                 ':ejemplar'=>$ejemplar,
                 ':fecha_nacimiento'=>$fecha_nacimiento,
                 ':fecha_emicion'=>$fecha_emicion,
+            ':fecha_vencimiento'=>$fecha_vencimiento,
              ':num_documento'=>$num_documento,
                 ':domicilio'=>nl2br($domicilio),
                 ':provincias_residenciaID'=>NULL,
@@ -173,3 +174,5 @@ function ejecutarQuery($db, $sql) {
         exit();
     }
 }
+
+
